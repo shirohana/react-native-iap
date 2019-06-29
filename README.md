@@ -1,4 +1,5 @@
-# react-native-iap
+react-native-iap
+================
 [![Version](http://img.shields.io/npm/v/react-native-iap.svg?style=flat-square)](https://npmjs.org/package/react-native-iap)
 [![Download](http://img.shields.io/npm/dm/react-native-iap.svg?style=flat-square)](https://npmjs.org/package/react-native-iap)
 [![License](https://img.shields.io/npm/l/react-native-iap.svg)](https://npmjs.org/package/react-native-iap)
@@ -10,42 +11,61 @@
 [![PR Opened](https://img.shields.io/github/issues-pr/dooboolab/react-native-iap.svg)](https://github.com/dooboolab/react-native-iap/pulls)
 [![PR Closed](https://img.shields.io/github/issues-pr-closed/dooboolab/react-native-iap.svg)](https://github.com/dooboolab/react-native-iap/pulls?q=is%3Apr+is%3Aclosed) [![Greenkeeper badge](https://badges.greenkeeper.io/dooboolab/react-native-iap.svg)](https://greenkeeper.io/)
 
-> This is a react-native link library project for in-app purchase for both android and ios platforms. The goal for this project is to have similar experience between the two platforms for in-app-purchase. Basically, android platform has more functions for in-app-purchase and is not our specific interests for this project. We are willing to share same in-app-purchase experience for both `android` and `ios`.
+> This is a react-native link library project for in-app purchase for both
+> android and ios platforms.
+>
+> The goal for this project is to have similar experience between the two
+> platforms for in-app-purchase. Basically, android platform has more functions
+> for in-app-purchase and is not our specific interests for this project.
+>
+> We are willing to share same in-app-purchase experience for both `android` and `ios`.
 
-> Checkout example code<br/>
-![wjl0ak0fgj](https://user-images.githubusercontent.com/27461460/52619625-87aa8a80-2ee5-11e9-9aee-6691c34408f3.gif)
+> Checkout demo:
+>
+> ![demo.gif](https://user-images.githubusercontent.com/27461460/52619625-87aa8a80-2ee5-11e9-9aee-6691c34408f3.gif)
 
-## Playstore & Itunnesconnect configuration
-  - Please refer to [Blog](https://medium.com/@dooboolab/react-native-in-app-purchase-121622d26b67).
+Configuration of Google Play & iTunes Connect
+---------------------------------------------
+- Please refer to [Blog](https://medium.com/@dooboolab/react-native-in-app-purchase-121622d26b67).
 
-## [Deprecated README](https://github.com/dooboolab/react-native-iap/blob/master/README_DEPRECATED.md)
-  - If you are using `react-native-iap` version below `3.0.0`, please follow above readme.
+[Deprecated README]
+-------------------
+[Deprecated README]: https://github.com/dooboolab/react-native-iap/blob/master/README_DEPRECATED.md
+- If you are using `react-native-iap` &lt; `3.0.0`, please follow above readme.
 
-## News on major releases
-  - [react-native-iap V3 note](https://medium.com/dooboolab/react-native-iap-v3-1259e0b0c017)
+News on Major Releases
+----------------------
+- [react-native-iap v3 note](https://medium.com/dooboolab/react-native-iap-v3-1259e0b0c017)
 
 #### Methods
-| Func  | Param  | Return | Description |
-| :------------ |:---------------:| :---------------:| :-----|
-| initConnection |  | `Promise<boolean>` | Init IAP module. On Android this can be called to preload the connection to Play Services. In iOS, it will simply call `canMakePayments` method and return value.|
-| getProducts | `string[]` Product IDs/skus | `Promise<Product[]>` | Get a list of products (consumable and non-consumable items, but not subscriptions). Note: On iOS versions earlier than 11.2 this method _will_ also return subscriptions if they are included in your list of SKUs. This is because we cannot differentiate between IAP products and subscriptions prior to 11.2. |
-| getSubscriptions | `string[]` Subscription IDs/skus | `Promise<Subscription[]>` | Get a list of subscriptions. Note: On iOS versions earlier than 11.2 this method _will_ also return products if they are included in your list of SKUs. This is because we cannot differentiate between IAP products and subscriptions prior to 11.2. |
-| getPurchaseHistory | | `Promise<Purchase[]>` | Gets an inventory of purchases made by the user regardless of consumption status (where possible) |
-| getAvailablePurchases | | `Promise<Purchase[]>` | Get all purchases made by the user (either non-consumable, or haven't been consumed yet)
-| ~~buyProduct~~ | `string` Product ID/sku | `Promise<Purchase>` | Buy a product |
-| requestPurchase | `string` Product ID/sku | `Promise<string>` | Request a purchase. `purchaseUpdatedListener` will receive the result. |
-| ~~buyProductWithQuantityIOS~~ | `string` Product ID/sku, `number` Quantity | `Promise<Purchase>` | Buy a product with a specified quantity (iOS only) |
-| requestPurchaseWithQuantityIOS | `string` Product ID/sku, `number` Quantity | `Promise<Purchase>` | Buy a product with a specified quantity (iOS only). `purchaseUpdatedListener` will receive the result |
-| ~~buySubscription~~ | `string` Subscription ID/sku, `string` Old Subscription ID/sku (on Android), `int` Proration Mode (on Android) | `Promise<Purchase>` | Create (buy) a subscription to a sku. For upgrading/downgrading subscription on Android pass the second parameter with current subscription ID, on iOS this is handled automatically by store. You can also optionally pass in a proration mode integer for upgrading/downgrading subscriptions on Android |
-| requestSubscription | `string` Subscription ID/sku, `string` Old Subscription ID/sku (on Android), `int` Proration Mode (on Android) | `Promise<string>` | Create (buy) a subscription to a sku. For upgrading/downgrading subscription on Android pass the second parameter with current subscription ID, on iOS this is handled automatically by store. You can also optionally pass in a proration mode integer for upgrading/downgrading subscriptions on Android |
-| clearTransactionIOS | `void` | `void` | Clear up the unfinished transanction which sometimes causes problem. Read more in below readme. |
-| clearProductsIOS | `void` | `void` | Clear all products, subscriptions in ios. Read more in below readme. |
-| consumePurchaseAndroid | `string` purchase token, `string` developerPayload | `Promise<void>` | Consume a product (on Android.) No-op on iOS. |
-| endConnectionAndroid | | `Promise<void>` | End billing connection (on Android.) No-op on iOS. |
-| consumeAllItemsAndroid | | `Promise<void>` | Consume all items in android so they are able to buy again (on Android.) No-op on iOS. |
-| validateReceiptIos | `object` receiptBody, `boolean` isTest | `object or boolean` result | validate receipt for ios. |
-| validateReceiptAndroid | `string` packageName, `string` productId, `string` productToken, `string` accessToken, `boolean` isSubscription | `object or boolean` result | validate receipt for android. |
-| requestReceiptIOS |  | `Promise<string>` | Get the current receipt (on iOS.) No-op on Android. |
+Func                                                         | Param                                                                                                           | Return                     | Description
+:---                                                         | :----:                                                                                                          | :----:                     | :----------
+`initConnection()`                                           | &nbsp;                                                                                                          | `Promise<boolean>`         | Init IAP module. On Android this can be called to preload the connection to Play Services. In iOS, it will simply call `canMakePayments` method and return value.
+`getProducts(skus: string[])`                                | Product IDs/skus                                                                                                | `Promise<Product[]>`       | Get a list of products (consumable and non-consumable items, but not subscriptions). Note: On iOS versions earlier than 11.2 this method _will_ also return subscriptions if they are included in your list of SKUs. This is because we cannot differentiate between IAP products and subscriptions prior to 11.2.
+`getSubscriptions(skus: string[])`                           | Subscription IDs/skus                                                                                           | `Promise<Subscription[]>`  | Get a list of subscriptions. Note: On iOS versions earlier than 11.2 this method _will_ also return products if they are included in your list of SKUs. This is because we cannot differentiate between IAP products and subscriptions prior to 11.2.
+`getPurchaseHistory()`                                       | &nbsp;                                                                                                          | `Promise<Purchase[]>`      | Gets an inventory of purchases made by the user regardless of consumption status (where possible)
+`getAvailablePurchases()`                                    | &nbsp;                                                                                                          | `Promise<Purchase[]>`      | Get all purchases made by the user (either non-consumable, or haven't been consumed yet)
+~~buyProduct(sku: string)~~                                  | Product ID/sku                                                                                                  | `Promise<Purchase>`        | Buy a product
+`requestPurchase(sku: string)`                               | Product ID/sku                                                                                                  | `Promise<string>`          | Request a purchase. `purchaseUpdatedListener` will receive the result.
+~~`buyProductWithQuantityIOS(sku: string, quantity: number)`~~ | 1. Product ID/sku.<br>2. Quantity                                                                                  | `Promise<Purchase>`        | Buy a product with a specified quantity (iOS only)
+requestPurchaseWithQuantityIOS                               | `string` Product ID/sku, `number` Quantity                                                                      | `Promise<Purchase>`        | Buy a product with a specified quantity (iOS only). `purchaseUpdatedListener` will receive the result
+~~buySubscription~~                                          | `string` Subscription ID/sku, `string` Old Subscription ID/sku (on Android), `int` Proration Mode (on Android)  | `Promise<Purchase>`        | Create (buy) a subscription to a sku. For upgrading/downgrading subscription on Android pass the second parameter with current subscription ID, on iOS this is handled automatically by store. You can also optionally pass in a proration mode integer for upgrading/downgrading subscriptions on Android
+requestSubscription                                          | `string` Subscription ID/sku, `string` Old Subscription ID/sku (on Android), `int` Proration Mode (on Android)  | `Promise<string>`          | Create (buy) a subscription to a sku. For upgrading/downgrading subscription on Android pass the second parameter with current subscription ID, on iOS this is handled automatically by store. You can also optionally pass in a proration mode integer for upgrading/downgrading subscriptions on Android
+clearTransactionIOS                                          | `void`                                                                                                          | `void`                     | Clear up the unfinished transanction which sometimes causes problem. Read more in below readme.
+clearProductsIOS                                             | `void`                                                                                                          | `void`                     | Clear all products, subscriptions in ios. Read more in below readme.
+consumePurchaseAndroid                                       | `string` purchase token, `string` developerPayload                                                              | `Promise<void>`            | Consume a product (on Android.) No-op on iOS.
+endConnectionAndroid                                         |                                                                                                                 | `Promise<void>`            | End billing connection (on Android.) No-op on iOS.
+consumeAllItemsAndroid                                       |                                                                                                                 | `Promise<void>`            | Consume all items in android so they are able to buy again (on Android.) No-op on iOS.
+validateReceiptIos                                           | `object` receiptBody, `boolean` isTest                                                                          | `object or boolean` result | validate receipt for ios.
+validateReceiptAndroid                                       | `string` packageName, `string` productId, `string` productToken, `string` accessToken, `boolean` isSubscription | `object or boolean` result | validate receipt for android.
+requestReceiptIOS                                            |                                                                                                                 | `Promise<string>`          | Get the current receipt (on iOS.) No-op on Android.
+
+#### Deprecated Methods
+Func                                                         | Param                                                                                                           | Return                     | Description
+:---                                                         | :----:                                                                                                          | :----:                     | :----------
+~~`buyProduct(sku: string)`~~                                  | Product ID/sku                                                                                                  | `Promise<Purchase>`        | Buy a product
+~~`buyProductWithQuantityIOS(sku: string, quantity: number)`~~ | 1. Product ID/sku.<br>2. Quantity                                                                                  | `Promise<Purchase>`        | Buy a product with a specified quantity (iOS only)
+~~`buySubscription`~~                                          | `string` Subscription ID/sku, `string` Old Subscription ID/sku (on Android), `int` Proration Mode (on Android)  | `Promise<Purchase>`        | Create (buy) a subscription to a sku. For upgrading/downgrading subscription on Android pass the second parameter with current subscription ID, on iOS this is handled automatically by store. You can also optionally pass in a proration mode integer for upgrading/downgrading subscriptions on Android
 
 ## Npm repo
 https://www.npmjs.com/package/react-native-iap
